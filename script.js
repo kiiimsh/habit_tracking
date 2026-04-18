@@ -198,13 +198,52 @@ function renderChart() {
 
     const width = 800;
     const height = 300;
-    const paddingX = 10;
-    const paddingY = 20;
+    const paddingX = 50; // More space for Y-axis labels
+    const paddingY = 40; // More space for X-axis labels
     const innerWidth = width - paddingX * 2;
     const innerHeight = height - paddingY * 2;
     
     const xStep = innerWidth / Math.max(lastDay - 1, 1);
     const yScale = innerHeight / maxChecks;
+
+    // Draw Grid Lines & Y-axis Labels
+    for (let i = 0; i <= maxChecks; i++) {
+        const y = height - paddingY - (i * yScale);
+
+        // Grid Line
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute("x1", paddingX);
+        line.setAttribute("y1", y);
+        line.setAttribute("x2", width - paddingX);
+        line.setAttribute("y2", y);
+        line.setAttribute("stroke", "#E5E7EB");
+        line.setAttribute("stroke-width", "1");
+        achievementChart.appendChild(line);
+
+        // Y-axis Text (Habit Count)
+        const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        text.setAttribute("x", paddingX - 5);
+        text.setAttribute("y", y + 4);
+        text.setAttribute("text-anchor", "end");
+        text.setAttribute("font-size", "12");
+        text.setAttribute("fill", "#6B7280");
+        text.textContent = i;
+        achievementChart.appendChild(text);
+    }
+
+    // Draw X-axis Labels (Dates)
+    const labelDays = [1, 5, 10, 15, 20, 25, lastDay];
+    labelDays.forEach(day => {
+        const x = paddingX + ((day - 1) * xStep);
+        const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        text.setAttribute("x", x);
+        text.setAttribute("y", height - paddingY + 20);
+        text.setAttribute("text-anchor", "middle");
+        text.setAttribute("font-size", "12");
+        text.setAttribute("fill", "#6B7280");
+        text.textContent = day;
+        achievementChart.appendChild(text);
+    });
 
     // Path
     let dPath = "";
@@ -217,7 +256,7 @@ function renderChart() {
     const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
     path.setAttribute("d", dPath);
     path.setAttribute("fill", "none");
-    path.setAttribute("stroke", "#111827"); // Dark line for sketch feel
+    path.setAttribute("stroke", "#000000"); // Black line
     path.setAttribute("stroke-width", "3");
     path.setAttribute("stroke-linejoin", "round");
     achievementChart.appendChild(path);
@@ -229,8 +268,8 @@ function renderChart() {
         const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
         circle.setAttribute("cx", x); 
         circle.setAttribute("cy", y);
-        circle.setAttribute("r", "3");
-        circle.setAttribute("fill", "#111827");
+        circle.setAttribute("r", "3.6"); // 20% larger (3 * 1.2)
+        circle.setAttribute("fill", "#0066FF"); // Main Color (Deep Blue)
         achievementChart.appendChild(circle);
     });
 }
