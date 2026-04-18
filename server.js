@@ -9,7 +9,8 @@ const PORT = process.env.PORT || 3000;
 
 // Vercel environment detection
 const isVercel = process.env.VERCEL === '1';
-const DATA_FILE = isVercel ? '/tmp/habits.json' : path.join(__dirname, 'data', 'habits.json');
+// Use process.cwd() to correctly reference the project root on Vercel
+const DATA_FILE = isVercel ? '/tmp/habits.json' : path.join(process.cwd(), 'data', 'habits.json');
 
 // In-memory fallback for Vercel
 let inMemoryData = { habits: [], completionData: {} };
@@ -17,13 +18,15 @@ let inMemoryData = { habits: [], completionData: {} };
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname)));
+
+// Serve static files from the project root
+// On Vercel, process.cwd() is the root of the deployment
+app.use(express.static(process.cwd()));
 
 // Helper functions for data management
 const readData = () => {
     try {
         if (isVercel) {
-            // On Vercel, we try to read from /tmp, or use memory
             if (fs.existsSync(DATA_FILE)) {
                 return JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
             }
@@ -43,18 +46,15 @@ const readData = () => {
 
 const writeData = (data) => {
     try {
-        // Try writing to the appropriate path
         const dir = path.dirname(DATA_FILE);
         if (!fs.existsSync(dir)) {
             fs.mkdirSync(dir, { recursive: true });
         }
         fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2), 'utf8');
-        
-        // Always sync with memory
         inMemoryData = data;
     } catch (err) {
-        console.error('Write Error (Persistence failed, using memory):', err);
-        inMemoryData = data; // Keep in memory even if file write fails
+        console.error('Write Error:', err);
+        inMemoryData = data;
     }
 };
 
@@ -105,6 +105,11 @@ app.post('/api/toggle', (req, res) => {
 
     writeData(data);
     res.json({ completionData: data.completionData });
+});
+
+// Explicitly handle the root to serve index.html if static middleware fails for some reason
+app.get('/', (req, res) => {
+    res.sendFile(path.join(process.cwd(), 'index.html'));
 });
 
 if (require.main === module) {
