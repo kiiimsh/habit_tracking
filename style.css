@@ -40,26 +40,25 @@ body {
 
 /* Header */
 .header {
-    text-align: center;
-    padding: 40px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0 30px;
 }
 
 .logo {
-    font-size: 32px;
+    font-size: 24px;
     font-weight: 700;
     color: var(--text-main);
-    letter-spacing: -1px;
-    margin-bottom: 8px;
+    letter-spacing: -0.5px;
 }
 
-.logo span {
-    color: var(--primary-color);
-}
-
-.date-display {
-    color: var(--text-muted);
-    font-weight: 500;
-    font-size: 16px;
+.year-month {
+    border: 2px solid var(--text-main);
+    padding: 8px 16px;
+    font-weight: 600;
+    font-size: 18px;
+    border-radius: 4px;
 }
 
 /* Content & Cards */
@@ -90,16 +89,69 @@ body {
     font-weight: 600;
 }
 
-.badge {
-    background: var(--primary-light);
-    color: var(--primary-color);
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 14px;
-    font-weight: 600;
+/* Date Selector & Add Habit */
+.date-selector-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
-/* Habit Form */
+.date-label {
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.date-selector {
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 16px;
+    font-family: inherit;
+    outline: none;
+    cursor: pointer;
+}
+
+.date-selector:focus {
+    border-color: var(--primary-color);
+}
+
+.btn-icon {
+    background: none;
+    border: 2px solid var(--text-main);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-main);
+    transition: all 0.2s;
+}
+
+.btn-icon:hover {
+    background: var(--text-main);
+    color: white;
+}
+
+.add-habit-container {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px dashed var(--border);
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    overflow: hidden;
+    max-height: 200px;
+    opacity: 1;
+}
+
+.add-habit-container.hidden {
+    max-height: 0;
+    opacity: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
 .habit-form {
     display: flex;
     gap: 12px;
@@ -107,26 +159,23 @@ body {
 
 .habit-form input {
     flex: 1;
-    padding: 14px 20px;
+    padding: 12px 16px;
     border: 1px solid var(--border);
-    border-radius: var(--radius);
+    border-radius: 8px;
     font-size: 16px;
     outline: none;
-    transition: border-color 0.2s;
 }
 
 .habit-form input:focus {
     border-color: var(--primary-color);
 }
 
-/* Buttons */
 .btn {
     padding: 12px 24px;
     border: none;
-    border-radius: var(--radius);
+    border-radius: 8px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s;
     font-size: 16px;
 }
 
@@ -137,22 +186,25 @@ body {
 
 .btn-primary:hover {
     background: var(--primary-hover);
-    transform: translateY(-1px);
-}
-
-.btn-delete {
-    padding: 8px;
-    background: none;
-    color: var(--text-muted);
-    border-radius: 6px;
-}
-
-.btn-delete:hover {
-    color: var(--danger);
-    background: rgba(239, 68, 68, 0.1);
 }
 
 /* Habit List */
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.badge {
+    background: var(--primary-light);
+    color: var(--primary-color);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
 .habit-list {
     list-style: none;
 }
@@ -160,9 +212,9 @@ body {
 .habit-item {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     padding: 16px 0;
     border-bottom: 1px solid var(--border);
-    animation: fadeIn 0.3s ease;
 }
 
 .habit-item:last-child {
@@ -170,20 +222,22 @@ body {
 }
 
 .habit-item label {
-    flex: 1;
     display: flex;
     align-items: center;
     cursor: pointer;
     font-size: 18px;
     font-weight: 500;
+    flex-direction: row-reverse; /* Put checkbox on the right */
+    gap: 16px;
+    flex: 1;
+    justify-content: space-between;
 }
 
 .habit-checkbox {
     width: 24px;
     height: 24px;
-    margin-right: 16px;
-    border: 2px solid var(--border);
-    border-radius: 6px;
+    border: 2px solid var(--text-main);
+    border-radius: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -195,8 +249,7 @@ input[type="checkbox"] {
 }
 
 input[type="checkbox"]:checked + .habit-checkbox {
-    background: var(--primary-color);
-    border-color: var(--primary-color);
+    background: var(--text-main);
 }
 
 input[type="checkbox"]:checked + .habit-checkbox::after {
@@ -210,22 +263,99 @@ input[type="checkbox"]:checked ~ span {
     color: var(--text-muted);
 }
 
+.btn-delete {
+    padding: 8px;
+    background: none;
+    color: var(--text-muted);
+    border: none;
+    cursor: pointer;
+    margin-left: 12px;
+}
+
+.btn-delete:hover {
+    color: var(--danger);
+}
+
+/* Monthly Grid */
+.grid-container {
+    overflow-x: auto;
+    padding-bottom: 10px;
+}
+
+.monthly-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+}
+
+.monthly-table th, .monthly-table td {
+    border: 1px solid var(--border);
+    padding: 8px 4px;
+    text-align: center;
+    font-size: 12px;
+}
+
+.monthly-table th:first-child, .monthly-table td:first-child {
+    text-align: left;
+    padding-left: 12px;
+    font-weight: 600;
+    position: sticky;
+    left: 0;
+    background: var(--card-bg);
+    min-width: 100px;
+    z-index: 2;
+}
+
+.monthly-table th {
+    background: var(--background);
+    color: var(--text-muted);
+}
+
+.grid-check {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: var(--primary-color);
+    border-radius: 2px;
+}
+
 /* Visualization - Chart Styles */
 .chart-container {
     width: 100%;
-    overflow: hidden;
     position: relative;
-    padding: 20px 0;
+    padding: 20px 0 40px 40px; /* Space for axis labels */
 }
 
 .svg-wrapper {
     width: 100%;
-    height: 300px;
+    height: 250px;
+    position: relative;
+}
+
+.y-axis-label {
+    position: absolute;
+    left: -35px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: var(--text-muted);
+    text-align: center;
+    line-height: 1.2;
+}
+
+.x-axis-label {
+    position: absolute;
+    bottom: -30px;
+    right: 0;
+    font-size: 12px;
+    color: var(--text-muted);
 }
 
 #achievementChart {
     width: 100%;
     height: 100%;
+    border-bottom: 2px solid var(--text-main);
+    border-left: 2px solid var(--text-main);
 }
 
 .chart-loading {
@@ -234,63 +364,18 @@ input[type="checkbox"]:checked ~ span {
     color: var(--text-muted);
 }
 
-.chart-legend {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 10px;
-    font-size: 14px;
-    color: var(--text-muted);
-}
-
-.legend-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.line-dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: var(--primary-color);
-}
-
-/* Tooltip style if needed */
-.chart-tooltip {
-    position: absolute;
-    background: rgba(0, 0, 0, 0.8);
-    color: white;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.2s;
-}
-
 /* Footer */
 .footer {
     text-align: center;
-    padding: 40px 0;
+    padding: 20px 0;
     color: var(--text-muted);
     font-size: 14px;
-}
-
-/* Animations */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
 }
 
 /* Mobile Responsive */
 @media (max-width: 600px) {
-    .app-container {
-        padding: 12px;
-    }
-    .logo { font-size: 28px; }
+    .app-container { padding: 12px; }
+    .header { flex-direction: column; gap: 16px; }
     .habit-form { flex-direction: column; }
-    .btn-primary { width: 100%; }
-    .habit-item label { font-size: 16px; }
     .svg-wrapper { height: 200px; }
 }

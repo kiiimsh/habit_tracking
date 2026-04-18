@@ -14,23 +14,33 @@
 <body>
     <div class="app-container">
         <header class="header">
-            <h1 class="logo">Habit<span>Tracking</span></h1>
-            <p class="date-display" id="currentDate"></p>
+            <h1 class="logo">&lt; Title &gt;</h1>
+            <div class="year-month" id="yearMonthDisplay">YYYY.MM</div>
         </header>
 
         <main class="content">
-            <!-- Habit Input Section -->
-            <section class="card habit-input-card">
-                <form id="habitForm" class="habit-form">
-                    <input type="text" id="habitInput" placeholder="새로운 습관을 입력하세요 (예: 운동, 독서)" required>
-                    <button type="submit" class="btn btn-primary" id="addHabitBtn">추가</button>
-                </form>
-            </section>
-
-            <!-- Habit List Section -->
+            <!-- Date Selector & Habit List Section -->
             <section class="card habit-list-card">
                 <div class="card-header">
-                    <h2 class="card-title">오늘의 습관</h2>
+                    <div class="date-selector-wrapper">
+                        <label for="dateSelector" class="date-label">기록 날짜 (지정)</label>
+                        <input type="date" id="dateSelector" class="date-selector">
+                    </div>
+                    <button class="btn-icon" id="toggleAddHabitBtn" aria-label="습관 추가">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    </button>
+                </div>
+                
+                <!-- Hidden Add Habit Form -->
+                <div id="addHabitContainer" class="add-habit-container hidden">
+                    <form id="habitForm" class="habit-form">
+                        <input type="text" id="habitInput" placeholder="새로운 습관을 입력하세요 (예: 운동, 독서)" required>
+                        <button type="submit" class="btn btn-primary" id="addHabitBtn">추가</button>
+                    </form>
+                </div>
+
+                <div class="list-header">
+                    <h3>습관 List</h3>
                     <span class="badge" id="habitCount">0개</span>
                 </div>
                 <ul id="habitList" class="habit-list">
@@ -38,19 +48,27 @@
                 </ul>
             </section>
 
+            <!-- Monthly Grid Section -->
+            <section class="card grid-card">
+                <div class="grid-container" id="monthlyGridContainer">
+                    <div class="grid-loading">데이터를 불러오는 중...</div>
+                    <!-- Table will be injected here -->
+                </div>
+            </section>
+
             <!-- Visualization Section -->
             <section class="card visualization-card">
                 <div class="card-header">
-                    <h2 class="card-title">월간 달성률 그래프</h2>
+                    <h2 class="card-title">graph</h2>
                 </div>
                 <div class="chart-container">
                     <div id="chartLoading" class="chart-loading">데이터를 불러오는 중...</div>
                     <div class="svg-wrapper" id="svgWrapper">
+                        <!-- Y-axis label added via CSS or SVG text -->
+                        <div class="y-axis-label">체크<br>갯수</div>
                         <svg id="achievementChart" viewBox="0 0 800 300" preserveAspectRatio="xMidYMid meet"></svg>
+                        <div class="x-axis-label">일</div>
                     </div>
-                </div>
-                <div class="chart-legend">
-                    <div class="legend-item"><span class="line-dot"></span>달성률 (%)</div>
                 </div>
             </section>
         </main>
