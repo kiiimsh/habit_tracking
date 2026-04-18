@@ -8,9 +8,9 @@
 - **월간 시각화**: SVG 기반의 월간 달성률 꺾은선 그래프 제공.
 
 ## 기술 스택
-- HTML5 / CSS3 (Vanilla)
-- JavaScript (Vanilla ES6+)
-- SVG (Data Visualization)
+- **Frontend**: HTML5 / CSS3 (Vanilla), JavaScript (Vanilla ES6+)
+- **Backend**: Node.js, Express
+- **Data**: JSON File-based persistence (foundation for DB migration)
 
 ## AI 모델을 위한 지침 (Guidelines for AI Models)
 이 프로젝트는 순수 바닐라 스택(HTML/CSS/JS)으로 구축된 경량 프로토타입입니다. 다른 AI 모델이 이 코드를 수정하거나 기능을 추가할 때 다음 지침을 준수하십시오:
@@ -21,5 +21,14 @@
 4. **의존성**: 가급적 외부 라이브러리 추가 없이 바닐라 환경을 유지하는 것을 권장합니다.
 
 ## 실행 방법
-1. `index.html` 파일을 브라우저에서 직접 엽니다.
-2. 별도의 서버 환경 없이 로컬 파일 시스템에서 즉시 실행 가능합니다.
+### 1. 로컬 파일 시스템 (Frontend Only)
+`index.html` 파일을 브라우저에서 직접 엽니다. (데이터는 `localStorage`에 저장됩니다.)
+
+### 2. 서버 연동 (Full Stack)
+서버를 실행하면 데이터가 파일 시스템에 저장되며, 향후 배포가 용이해집니다.
+1. Node.js가 설치된 환경에서 다음 명령어를 실행합니다:
+   ```bash
+   npm install
+   npm start
+   ```
+2. 브라우저에서 `http://localhost:3000` 접속 또는 `index.html`을 엽니다.
