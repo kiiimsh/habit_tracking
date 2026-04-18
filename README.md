@@ -1,34 +1,49 @@
 # Habit Tracking Prototype
 
-깨끗하고 직관적인 UI를 제공하는 습관 관리 서비스 프로토타입입니다. 사용자는 매일의 습관을 기록하고 월간 달성률을 시각적으로 확인할 수 있습니다.
+깨끗하고 직관적인 UI를 제공하는 습관 관리 서비스 프로토타입입니다. 사용자는 날짜별 습관을 기록하고 월간 달성 현황을 표와 그래프로 한눈에 확인할 수 있습니다.
 
-## 핵심 기능
-- **습관 관리**: 습관 추가 및 삭제.
-- **데일리 체크**: 당일 습관 완료 여부 체크 및 로컬 저장소(`localStorage`)를 통한 데이터 보존.
-- **월간 시각화**: SVG 기반의 월간 달성률 꺾은선 그래프 제공.
+## 🌟 주요 기능
+- **날짜 선택 기능**: 오늘뿐만 아니라 과거의 특정 날짜를 선택하여 습관 완료 여부를 기록하고 수정할 수 있습니다.
+- **습관 트래커 (Monthly Grid)**: 한 달 전체의 습관 달성 현황을 행(습관)과 열(일자)로 구성된 표 형식으로 제공합니다.
+- **시각화 그래프**: 일자별 체크된 습관의 개수를 꺾은선 그래프로 시각화하여 성취도를 확인할 수 있습니다.
+- **데이터 영속성**: 로컬 환경에서는 파일 시스템에, Vercel 배포 환경에서는 임시 서버 메모리에 데이터를 안전하게 보존합니다.
 
-## 기술 스택
-- **Frontend**: HTML5 / CSS3 (Vanilla), JavaScript (Vanilla ES6+)
-- **Backend**: Node.js, Express
-- **Data**: JSON File-based persistence (foundation for DB migration)
+## 🛠 기술 스택
+- **Frontend**: HTML5, CSS3, Vanilla JavaScript (ES6+)
+- **Backend**: Node.js, Express (Serverless Function 지원)
+- **Deployment**: Vercel Optimized (Zero Config 지원 구조)
 
-## AI 모델을 위한 지침 (Guidelines for AI Models)
-이 프로젝트는 순수 바닐라 스택(HTML/CSS/JS)으로 구축된 경량 프로토타입입니다. 다른 AI 모델이 이 코드를 수정하거나 기능을 추가할 때 다음 지침을 준수하십시오:
+## 📂 프로젝트 구조
+- `public/`: 웹 프론트엔드 자원 (HTML, CSS, JS)
+- `api/`: Vercel 서버리스 함수 엔트리 포인트
+- `server.js`: 핵심 비즈니스 로직 및 API 서버
+- `data/`: 로컬 환경 데이터 저장 디렉토리
+- `docs/`: 개발 기록 및 배포 가이드 문서
 
-1. **디자인 일관성**: `style.css`의 `:root`에 정의된 컬러 팔레트와 디자인 토큰을 사용하십시오. 새로운 UI 요소 추가 시 기존의 미니멀한 블루/화이트 테마를 유지해야 합니다.
-2. **상태 관리**: 현재 습관과 완료 데이터는 `script.js` 내의 `habits` 배열과 `completionData` 객체로 관리됩니다. 데이터 구조 변경 시 `saveData()`와 `localStorage` 연동 로직을 반드시 확인하십시오.
-3. **시각화 로직**: `renderChart()` 함수는 매달의 날짜 수를 자동으로 계산하여 SVG를 렌더링합니다. 차트 수정 시 뷰박스(viewBox)와 패딩 설정을 고려하여 반응형이 깨지지 않도록 하십시오.
-4. **의존성**: 가급적 외부 라이브러리 추가 없이 바닐라 환경을 유지하는 것을 권장합니다.
+## 🚀 실행 및 배포 지침
 
-## 실행 방법
-### 1. 로컬 파일 시스템 (Frontend Only)
-`index.html` 파일을 브라우저에서 직접 엽니다. (데이터는 `localStorage`에 저장됩니다.)
+### 1. 로컬에서 실행하기
+프로젝트 루트 디렉토리에서 다음 명령어를 실행합니다.
+```bash
+npm install
+npm start
+```
+이후 브라우저에서 `http://localhost:3000`으로 접속합니다.
 
-### 2. 서버 연동 (Full Stack)
-서버를 실행하면 데이터가 파일 시스템에 저장되며, 향후 배포가 용이해집니다.
-1. Node.js가 설치된 환경에서 다음 명령어를 실행합니다:
-   ```bash
-   npm install
-   npm start
-   ```
-2. 브라우저에서 `http://localhost:3000` 접속 또는 `index.html`을 엽니다.
+### 2. Vercel에 배포하기
+본 프로젝트는 Vercel 배포에 최적화된 구조(`public/` 폴더 및 `api/` 라우팅)를 가지고 있습니다.
+1. GitHub 저장소를 Vercel에 연결합니다.
+2. **Framework Preset**은 `Other` 또는 `Express`로 설정합니다.
+3. 배포 버튼을 누르면 자동으로 빌드 및 배포가 완료됩니다.
+*상세 가이드는 [docs/deployment_guide.md](./docs/deployment_guide.md)를 참고하세요.*
+
+## 🧠 AI 모델을 위한 개발 지침 (Guidelines for AI Models)
+이 프로젝트를 수정하거나 기능을 추가할 때 다음 사항을 준수하십시오:
+
+1. **파일 구조 유지**: 정적 파일은 반드시 `public/` 폴더 내에 위치시켜야 Vercel 배포 시 충돌이 발생하지 않습니다.
+2. **API 경로**: 모든 백엔드 통신은 `/api/*` 경로를 통해 이루어집니다. 프론트엔드에서 API 호출 시 상대 경로를 사용하십시오.
+3. **환경 감지**: 서버 로직 수정 시 `process.env.VERCEL` 변수를 통해 배포 환경과 로컬 환경을 구분하여 처리하십시오. (예: 파일 쓰기 권한 처리)
+4. **데이터 스키마**: 데이터는 `habits` (배열)와 `completionData` (날짜별 습관 배열 객체)로 구성됩니다. 이 구조를 유지하여 기존 데이터와의 호환성을 보장하십시오.
+
+## 📝 업데이트 기록
+최신 개발 이력은 [docs/dev_history](./docs/dev_history) 파일에서 확인하실 수 있습니다.

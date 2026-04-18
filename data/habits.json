@@ -1,6 +1,11 @@
 {
   "habits": [
+    "Drinking Water",
     "물 마시기"
   ],
-  "completionData": {}
+  "completionData": {
+    "2026-04-18": [
+      "Drinking Water"
+    ]
+  }
 }

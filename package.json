@@ -2,7 +2,6 @@
   "name": "habit-tracking-server",
   "version": "1.0.0",
   "description": "Habit Tracking Prototype Backend",
-  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js"
