@@ -49,6 +49,11 @@ app.get('/api/data', (req, res) => {
     res.json(readData());
 });
 
+// Explicitly handle the root to serve index.html if static middleware fails
+app.get('/', (req, res) => {
+    res.sendFile(path.join(process.cwd(), 'public', 'index.html'));
+});
+
 app.post('/api/habits', (req, res) => {
     const { name } = req.body;
     if (!name) return res.status(400).json({ error: 'Name is required' });
@@ -81,7 +86,8 @@ app.post('/api/toggle', (req, res) => {
     res.json({ completionData: data.completionData });
 });
 
-// NOTE: No static file serving here. Vercel will handle it.
+// NOTE: Serve static files from the public directory
+app.use(express.static(path.join(process.cwd(), 'public')));
 
 if (require.main === module) {
     app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
