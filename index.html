@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habit Tracking - 습관 관리의 시작</title>
+    <meta name="description" content="깨끗하고 직관적인 습관 관리 도구로 더 나은 나를 만드세요.">
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="header">
+            <h1 class="logo">Habit<span>Tracking</span></h1>
+            <p class="date-display" id="currentDate"></p>
+        </header>
+
+        <main class="content">
+            <!-- Habit Input Section -->
+            <section class="card habit-input-card">
+                <form id="habitForm" class="habit-form">
+                    <input type="text" id="habitInput" placeholder="새로운 습관을 입력하세요 (예: 운동, 독서)" required>
+                    <button type="submit" class="btn btn-primary" id="addHabitBtn">추가</button>
+                </form>
+            </section>
+
+            <!-- Habit List Section -->
+            <section class="card habit-list-card">
+                <div class="card-header">
+                    <h2 class="card-title">오늘의 습관</h2>
+                    <span class="badge" id="habitCount">0개</span>
+                </div>
+                <ul id="habitList" class="habit-list">
+                    <!-- Habits will be injected here -->
+                </ul>
+            </section>
+
+            <!-- Visualization Section -->
+            <section class="card visualization-card">
+                <div class="card-header">
+                    <h2 class="card-title">월간 달성률 그래프</h2>
+                </div>
+                <div class="chart-container">
+                    <div id="chartLoading" class="chart-loading">데이터를 불러오는 중...</div>
+                    <div class="svg-wrapper" id="svgWrapper">
+                        <svg id="achievementChart" viewBox="0 0 800 300" preserveAspectRatio="xMidYMid meet"></svg>
+                    </div>
+                </div>
+                <div class="chart-legend">
+                    <div class="legend-item"><span class="line-dot"></span>달성률 (%)</div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2026 Habit Tracking Prototype. All rights reserved.</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
