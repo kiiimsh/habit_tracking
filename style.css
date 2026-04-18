@@ -51,6 +51,20 @@ body {
     font-weight: 700;
     color: var(--text-main);
     letter-spacing: -0.5px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+    cursor: text;
+    outline: none;
+}
+
+.logo:hover {
+    background-color: var(--primary-light);
+}
+
+.logo:focus {
+    background-color: white;
+    box-shadow: 0 0 0 2px var(--primary-color);
 }
 
 .year-month {
@@ -370,6 +384,97 @@ input[type="checkbox"]:checked ~ span {
     padding: 20px 0;
     color: var(--text-muted);
     font-size: 14px;
+}
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+}
+
+.modal-overlay.hidden {
+    display: none;
+}
+
+.modal-content {
+    background: var(--card-bg);
+    width: 90%;
+    max-width: 500px;
+    border-radius: var(--radius);
+    padding: 30px;
+    box-shadow: var(--shadow);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.modal-header h2 {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.btn-close {
+    background: none;
+    border: none;
+    font-size: 32px;
+    cursor: pointer;
+    color: var(--text-muted);
+}
+
+.btn-close:hover {
+    color: var(--text-main);
+}
+
+.modal-list-container {
+    margin-top: 24px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.manage-habit-list {
+    list-style: none;
+}
+
+.manage-habit-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    gap: 12px;
+}
+
+.manage-habit-item input[type="text"] {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+.manage-habit-item input[type="text"]:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+.btn-edit-save {
+    color: var(--success);
+}
+
+.btn-modal-delete {
+    color: var(--danger);
 }
 
 /* Mobile Responsive */

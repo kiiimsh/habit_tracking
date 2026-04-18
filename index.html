@@ -14,7 +14,8 @@
 <body>
     <div class="app-container">
         <header class="header">
-            <h1 class="logo">&lt; Title &gt;</h1>
+            <!-- 사용자가 직접 클릭하여 서비스명을 수정할 수 있도록 contenteditable 속성 추가 -->
+            <h1 class="logo" id="serviceTitle" contenteditable="true" spellcheck="false">Habit Tracking</h1>
             <div class="year-month" id="yearMonthDisplay">YYYY.MM</div>
         </header>
 
@@ -26,19 +27,15 @@
                         <label for="dateSelector" class="date-label">기록 날짜 (지정)</label>
                         <input type="date" id="dateSelector" class="date-selector">
                     </div>
-                    <button class="btn-icon" id="toggleAddHabitBtn" aria-label="습관 추가">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    <button class="btn-icon" id="openModalBtn" aria-label="습관 관리">
+                        <!-- 연필 아이콘 (Edit Icon)으로 교체 -->
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                        </svg>
                     </button>
                 </div>
                 
-                <!-- Hidden Add Habit Form -->
-                <div id="addHabitContainer" class="add-habit-container hidden">
-                    <form id="habitForm" class="habit-form">
-                        <input type="text" id="habitInput" placeholder="새로운 습관을 입력하세요 (예: 운동, 독서)" required>
-                        <button type="submit" class="btn btn-primary" id="addHabitBtn">추가</button>
-                    </form>
-                </div>
-
                 <div class="list-header">
                     <h3>습관 List</h3>
                     <span class="badge" id="habitCount">0개</span>
@@ -77,6 +74,30 @@
             <p>&copy; 2026 Habit Tracking Prototype. All rights reserved.</p>
         </footer>
     </div>
+
+    <!-- 습관 관리 모달 (Habit Management Modal) -->
+    <div id="habitModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>습관 관리</h2>
+                <button id="closeModalBtn" class="btn-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- 습관 추가 폼 (모달 내부) -->
+                <form id="modalHabitForm" class="habit-form">
+                    <input type="text" id="modalHabitInput" placeholder="새로운 습관을 입력하세요" required>
+                    <button type="submit" class="btn btn-primary">추가</button>
+                </form>
+
+                <div class="modal-list-container">
+                    <ul id="modalHabitList" class="manage-habit-list">
+                        <!-- 습관 편집 리스트가 여기에 주입됩니다 -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
