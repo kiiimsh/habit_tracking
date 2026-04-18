@@ -43,17 +43,17 @@ class HabitHandler(http.server.SimpleHTTPRequestHandler):
             name = data.get('name')
             is_checked = data.get('isChecked')
             current_data = self.load_data()
-            
+
             if date not in current_data['completionData']:
                 current_data['completionData'][date] = []
-            
+
             if is_checked:
                 if name not in current_data['completionData'][date]:
                     current_data['completionData'][date].append(name)
             else:
                 if name in current_data['completionData'][date]:
                     current_data['completionData'][date].remove(name)
-            
+
             self.save_data(current_data)
             self.send_json_response(200, {"completionData": current_data['completionData']})
 
