@@ -250,20 +250,27 @@ body {
 .habit-checkbox {
     width: 24px;
     height: 24px;
+    min-width: 24px; /* Ensure it stays a square */
+    min-height: 24px;
+    flex-shrink: 0;
     border: 2px solid var(--text-main);
     border-radius: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
     display: none;
 }
 
 input[type="checkbox"]:checked + .habit-checkbox {
-    background: var(--text-main);
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    transform: scale(1.05);
 }
 
 input[type="checkbox"]:checked + .habit-checkbox::after {
@@ -337,39 +344,26 @@ input[type="checkbox"]:checked ~ span {
 .chart-container {
     width: 100%;
     position: relative;
-    padding: 20px 0 40px 40px; /* Space for axis labels */
+    padding: 10px;
 }
 
 .svg-wrapper {
     width: 100%;
-    height: 250px;
+    height: 300px;
     position: relative;
 }
 
 .y-axis-label {
-    position: absolute;
-    left: -35px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 12px;
-    color: var(--text-muted);
-    text-align: center;
-    line-height: 1.2;
+    display: none; /* We will use SVG text for labels */
 }
 
 .x-axis-label {
-    position: absolute;
-    bottom: -30px;
-    right: 0;
-    font-size: 12px;
-    color: var(--text-muted);
+    display: none; /* We will use SVG text for labels */
 }
 
 #achievementChart {
     width: 100%;
     height: 100%;
-    border-bottom: 2px solid var(--text-main);
-    border-left: 2px solid var(--text-main);
 }
 
 .chart-loading {
